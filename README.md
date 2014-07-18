@@ -1,6 +1,7 @@
-persistence.js
+orm.js
 ==============
-`persistence.js` is a asynchronous Javascript object-relational
+`orm.js` ia a mirror from `persistence.js`
+which is an asynchronous Javascript object-relational
 mapper library. It can be used both in the web browser and on
 the server using [node.js](http://nodejs.org). It currently
 supports 4 types of data stores:
