@@ -28,10 +28,21 @@ component.
 To initiate a sync, the `EntityName.syncAll(..)` method is used. The method signature
 is the following:
 
-    EntityName.syncAll(conflictHandler, successCallback, errorCallback)
+    EntityName.syncAll(conflictHandler, successCallback, errorCallback, params);
 
 successCallback and errorCallback are optional. successCallback occurs after a
 successful sync errorCallback occurs on error (I.E. a non-200 response code).
+
+params is optional parameter as well. It is an object and it is used
+when you want to append extra parameters to your REST methods.
+Example:
+
+    EntityName.syncAll(conflictHandler, successCallback, errorCallback, {id:69, group: 96});
+    
+From this object the query string will be created and appended after default parameter `since`.
+For instance the request query string will then look like this:
+
+    ?since=254543r&id=69&group=96
 
 conflictHandler is called in the event of a conflict between local and remote data:
 
