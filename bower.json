@@ -1,11 +1,11 @@
 {
-  "name": "persistence",
+  "name": "orm.js",
   "main": "./lib/persistence.js",
-  "version": "0.3.0",
-  "_release": "0.3.0",
-  "_target": "~0.3.0",
-  "_source": "git://github.com/zefhemel/persistencejs.git",
-  "homepage": "http://persistencejs.org",
+  "version": "0.5.0",
+  "_release": "0.5.0",
+  "_target": "~0.5.0",
+  "_source": "git://github.com/TheCodeDestroyer/orm.js.git",
+  "homepage": "https://github.com/TheCodeDestroyer/orm.js",
   "authors": [
     "Zef Hemel <zef@zef.me>",
     "Fabio Rehm <fgrehm@gmail.com>",
