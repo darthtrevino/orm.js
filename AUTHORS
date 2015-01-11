@@ -1,5 +1,7 @@
 # Authors ordered by first contribution.
 
+persistence.js:
+
 Zef Hemel <zef@zef.me>
 Fabio Rehm <fgrehm@gmail.com>
 Lukas Berns
@@ -14,3 +16,8 @@ Masahiro Hayashi <hayashi.masahiro@gmail.com>
 Mick Staugaard <mick@staugaard.com>
 Shane Tomlinson <set117@gmail.com>
 Eugene Ware <eugene.ware@nextharbour.com>
+
+
+orm.js:
+
+The Code Destroyer <the.code.destroyer@gmail.com>

@@ -1,9 +1,9 @@
 {
   "name": "orm.js",
   "main": "./lib/persistence.js",
-  "version": "0.5.2",
-  "_release": "0.5.2",
-  "_target": "~0.5.2",
+  "version": "0.5.5",
+  "_release": "0.5.5",
+  "_target": "~0.5.5",
   "_source": "git://github.com/TheCodeDestroyer/orm.js.git",
   "homepage": "https://github.com/TheCodeDestroyer/orm.js",
   "authors": [
@@ -20,7 +20,8 @@
     "Masahiro Hayashi <hayashi.masahiro@gmail.com>",
     "Mick Staugaard <mick@staugaard.com>",
     "Shane Tomlinson <set117@gmail.com>",
-    "Eugene Ware <eugene.ware@nextharbour.com>"
+    "Eugene Ware <eugene.ware@nextharbour.com>",
+    "The Code Destroyer <the.code.destroyer@gmail.com>"
   ],
   "description": "An asynchronous Javascript database mapper library. You can use it in the browser, as well on the server (and you can share data models between them).",
   "license": "MIT",
