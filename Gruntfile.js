@@ -14,15 +14,6 @@ module.exports = function (grunt) {
      * JSHinting
      */
     jshint: {
-      options: {
-        curly: true,
-        eqeqeq: true,
-        eqnull: true,
-        browser: true,
-        globals: {
-          jQuery: true
-        }
-      },
       gruntfile: ['Gruntfile.js'],
       main: ['lib/**/*.js'],
       test: ['test/**/*.js']
