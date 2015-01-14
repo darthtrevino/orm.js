@@ -1,7 +1,5 @@
-// $ expresso -s test.sqlite3.store.js
-
-var assert = require('assert');
-var persistence = require('../../lib/persistence').persistence;
+var expect = require('chai').expect;
+var persistence = require('../../lib/persistence').createPersistence();
 var persistenceStore = require('../../lib/persistence.store.sqlite3');
 
 var dbPath = __dirname + '/test-sqlite3.db';
@@ -29,68 +27,79 @@ function removeDb() {
   }
 }
 
-module.exports = {
-  init: function(done) {
+describe("The Sqlite3 Data Store", function() {
+  before(function(done) {
     removeDb();
     session = persistenceStore.getSession(function () {
-      session.schemaSync(done);
+      session.schemaSync(function(res, err) {
+        if (err)
+          done(err);
+        else
+          done();
+      });
     });
-  },
-  add: function(done) {
+  });
+
+  after(function(done) {
+    session.close(function() {
+      removeDb();
+      done();
+    });
+  });
+
+  it("can add entities to persistence", function(done) {
     task = new Task(session, data);
     session.add(task);
     session.flush(function(result, err) {
-      assert.ifError(err);
+      expect(err).to.not.be.ok;
       done();
     });
-  },
-  get: function(done) {
+  });
+
+  it("can retrieve entities from persistence", function(done) {
     Task.findBy(session, 'id', task.id, function(task) {
-      assert.equal(task.username, data.username);
+      expect(task.username).to.equal(data.username);
       done();
     });
-  },
-  update: function(done) {
+  });
+
+  it("can update entities in persistence", function(done) {
     task.username = 'test2';
     Task.findBy(session, 'id', task.id, function(task) {
-      assert.equal(task.username, 'test2');
+      expect(task.username).to.equal('test2');
       done();
     });
-  },
-  remove: function(done) {
+  });
+
+  it("can remove entities from persistence", function(done) {
     session.remove(task);
     session.flush(function(result, err) {
-      assert.ifError(err);
+      expect(err).to.not.be.ok;
       Task.findBy(session, 'id', task.id, function(task) {
-        assert.equal(task, null);
+        expect(task).to.be.null;
         done();
       });
     });
-  },
-  addMultiple: function(done) {
+  });
+
+  it("can add multiple entities to persistence", function(done) {
     task = new Task(session, data);
     session.add(task);
     task2 = new Task(session, data2);
     session.add(task2);
     session.flush(function(result, err) {
-      assert.ifError(err);
+      expect(err).to.not.be.ok;
       var count = 0;
       Task.all(session).order('username', true).each(function(row) {
         count++;
         if (count == 1) {
-          assert.equal(row.username, data.username);
+          expect(row.username).to.equal(data.username);
         }
         if (count == 2) {
-          assert.equal(row.username, data2.username);
+          expect(row.username).to.equal(data2.username);
           done();
         }
       });
     });
-  },
-  afterAll: function(done) {
-    session.close(function() {
-      removeDb();
-      done();
-    });
-  }
-};
+  });
+});
