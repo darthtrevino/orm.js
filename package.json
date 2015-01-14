@@ -3,5 +3,13 @@
   "version": "0.5.0",
   "engine": "node >=0.2.0",
   "author": "Zef Hemel",
-  "directories": {"lib": "./lib"}
+  "directories": {
+    "lib": "./lib"
+  },
+  "devDependencies": {
+    "async": "^0.9.0",
+    "grunt": "^0.4.5",
+    "jit-grunt": "^0.9.0",
+    "time-grunt": "^1.0.0"
+  }
 }
