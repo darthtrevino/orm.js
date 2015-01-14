@@ -27,12 +27,10 @@ describe('Data Store Configuration', function() {
     session.close();
   });
 
-  /*
   it('can configure an in-memory store', function() {
     config.adaptor = 'memory';
     var persistenceStore = require('../../lib/persistence.store.config').init(persistence, config);
     var session = persistenceStore.getSession();
     session.close();
   });
-  */
 });
