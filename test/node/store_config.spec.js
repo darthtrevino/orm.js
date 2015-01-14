@@ -1,6 +1,16 @@
-var persistence = require('../../lib/persistence').createPersistence();
-
 var config;
+var stores = [
+  'mysql',
+  'memory',
+  //'sqlite3'
+];
+
+function canOpenAndCloseSession() {
+  var persistence = require('../../lib/persistence').createPersistence();
+  var persistenceStore = require('../../lib/persistence.store.config').init(persistence, config);
+  var session = persistenceStore.getSession();
+  session.close();
+}
 
 describe('Data Store Configuration', function() {
   beforeEach(function() {
@@ -14,23 +24,13 @@ describe('Data Store Configuration', function() {
     };
   });
 
-  it('can configure a mysql store', function() {
-    config.adaptor = 'mysql';
-    var persistenceStore = require('../../lib/persistence.store.config').init(persistence, config);
-    var session = persistenceStore.getSession();
-    session.close();
-  });
-
-  it('can configure a default store', function() {
-    var persistenceStore = require('../../lib/persistence.store.config').init(persistence, config);
-    var session = persistenceStore.getSession();
-    session.close();
-  });
-
-  it('can configure an in-memory store', function() {
-    config.adaptor = 'memory';
-    var persistenceStore = require('../../lib/persistence.store.config').init(persistence, config);
-    var session = persistenceStore.getSession();
-    session.close();
-  });
+  it('can configure a default store', canOpenAndCloseSession);
+  
+  for (var index in stores) {
+    var type = stores[index];
+    it("can configure a " + type + " store", function() {
+      config.adaptor = type;
+      canOpenAndCloseSession();
+    });
+  }
 });
