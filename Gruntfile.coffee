@@ -19,6 +19,8 @@ module.exports = (grunt) ->
           bail: true
         src: ["test/node/**/#{grunt.option('spec')||''}*.spec.js"]
 
-  grunt.registerTask 'default', [
+  grunt.registerTask 'test', [
     'mochaTest'
   ]
+
+  grunt.registerTask 'default', 'test'
