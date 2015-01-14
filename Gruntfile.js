@@ -10,6 +10,27 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    /**
+     * JSHinting
+     */
+    jshint: {
+      options: {
+        curly: true,
+        eqeqeq: true,
+        eqnull: true,
+        browser: true,
+        globals: {
+          jQuery: true
+        }
+      },
+      gruntfile: ['Gruntfile.js'],
+      main: ['lib/**/*.js'],
+      test: ['test/**/*.js']
+    },
+
+    /**
+     * Mocha Tests
+     */
     mochaTest: {
       unit_test: {
         options: {
@@ -25,6 +46,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('test', [
+    'jshint:gruntfile',
     'mochaTest'
   ]);
   grunt.registerTask("default", 'test');
