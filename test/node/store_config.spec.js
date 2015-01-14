@@ -25,7 +25,7 @@ describe('Data Store Configuration', function() {
   });
 
   it('can configure a default store', canOpenAndCloseSession);
-  
+
   for (var index in stores) {
     var type = stores[index];
     it("can configure a " + type + " store", function() {
