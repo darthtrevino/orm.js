@@ -113,7 +113,7 @@ Setting up
 * Using `bower`:
 
 ```shell
-bower install persistence
+bower install orm.js
 ```
 
 Add a `<script>` to your `index.html`:
@@ -593,7 +593,7 @@ Using persistence.js on the server
 
 Installing `persistence.js` on node is easy using [npm](http://npmjs.org):
 
-    npm install persistencejs
+    npm install orm.js
 
 Sadly the node.js server environment requires slight changes to
 `persistence.js` to make it work with multiple database connections:
