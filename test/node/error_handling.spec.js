@@ -1,14 +1,6 @@
 var expect = require('chai').expect;
-
-var persistence = require('../../lib/persistence').persistence;
+var persistence = require('../../lib/persistence').createPersistence();
 var persistenceStore = require('../../lib/persistence.store.mysql');
-persistenceStore.config(persistence, 'localhost', 3306, 'nodejs_mysql', 'test', 'test');
-
-var InexistentTable = persistence.define('inexistent_table', {
-  name: "TEXT"
-});
-
-var session = persistenceStore.getSession();
 
 var create = function(data, cb) {
   var inexistent_table = new InexistentTable(data);
@@ -25,9 +17,18 @@ var remove = function(inexistent_table, cb) {
   });
 };
 
-var temp;
+var temp, session, InexistentTable;
 
 describe('Error Handling', function() {
+  before(function(done){
+    persistenceStore.config(persistence, 'localhost', 3306, 'nodejs_mysql', 'test', 'test');
+    InexistentTable = persistence.define('inexistent_table', {
+      name: "TEXT"
+    });
+    session = persistenceStore.getSession();
+    done();
+  });
+
   beforeEach(function(done) {
     session.transaction(function(tx) {
       tx.executeSql('FLUSH TABLES WITH READ LOCK;', function() {
