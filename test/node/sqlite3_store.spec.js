@@ -32,10 +32,7 @@ describe("The Sqlite3 Data Store", function() {
     removeDb();
     session = persistenceStore.getSession(function () {
       session.schemaSync(function(res, err) {
-        if (err)
-          done(err);
-        else
-          done();
+        done(err);
       });
     });
   });
