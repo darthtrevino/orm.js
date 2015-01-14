@@ -1,9 +1,7 @@
-// $ expresso -s test/test.error.handling.js
+var expect = require('chai').expect;
 
-var assert = require('assert');
-var persistence = require('../lib/persistence').persistence;
-var persistenceStore = require('../lib/persistence.store.mysql');
-
+var persistence = require('../../lib/persistence').persistence;
+var persistenceStore = require('../../lib/persistence.store.mysql');
 persistenceStore.config(persistence, 'localhost', 3306, 'nodejs_mysql', 'test', 'test');
 
 var InexistentTable = persistence.define('inexistent_table', {
@@ -29,53 +27,58 @@ var remove = function(inexistent_table, cb) {
 
 var temp;
 
-module.exports = {
-  'beforeAll': function(done) {
+describe('Error Handling', function() {
+  beforeEach(function(done) {
     session.transaction(function(tx) {
       tx.executeSql('FLUSH TABLES WITH READ LOCK;', function() {
         done();
       });
     });
-  },
-  'schemaSync fail': function(done) {
-    session.schemaSync(function(tx, err) {
-      assert.isDefined(err);
-      done();
-    });
-  },
-  'create fail': function(done) {
-    create({
-      name: 'test'
-    }, function(err, result) {
-      assert.isDefined(err);
-      temp = result;
-      done();
-    });
-  },
-  'remove fail': function(done) {
-    remove(temp, function(err, result) {
-      assert.isDefined(err);
-      done();
-    });
-  },
-  'destroyAll fail': function(done) {
-    InexistentTable.all(session).destroyAll(function(result, err) {
-      assert.isDefined(err);
-      done();
-    });
-  },
-  'reset fail': function(done) {
-    session.reset(function(result, err) {
-      assert.isDefined(err);
-      done();
-    });
-  },
-  afterAll: function(done) {
+  });
+  afterEach(function(done) {
     session.transaction(function(tx) {
       tx.executeSql('UNLOCK TABLES;', function() {
         session.close();
         done();
       });
     });
-  }
-};
+  });
+
+  it('schemaSync emits an error', function(done) {
+    session.schemaSync(function(tx, err) {
+      expect(err).to.be.ok;
+      done();
+    });
+  });
+
+  it('create emits an error', function(done) {
+    create({
+      name: 'test'
+    }, function(err, result) {
+      expect(err).to.be.ok;
+      temp = result;
+      done();
+    });
+  });
+
+  it('remove emits an error', function(done) {
+    remove(temp, function(err, result) {
+      expect(err).to.be.ok;
+      done();
+    });
+  });
+
+  it('destroyAll emits an error', function(done) {
+    InexistentTable.all(session).destroyAll(function(result, err) {
+      expect(err).to.be.ok;
+      done();
+    });
+  });
+
+  it('reset emits an error', function(done) {
+    session.reset(function(result, err) {
+      expect(err).to.be.ok;
+      done();
+    });
+  });
+});
